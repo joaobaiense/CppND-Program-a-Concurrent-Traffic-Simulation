@@ -1,6 +1,11 @@
 #include <iostream>
-#include <random>
 #include "TrafficLight.h"
+
+// Initialize Static Members
+std::random_device rd;
+std::mt19937 TrafficLight::eng(rd());
+std::uniform_int_distribution<uint32_t> TrafficLight::randDist(TrafficLight::cycleMin, TrafficLight::cycleMax);
+
 
 /* Implementation of class "MessageQueue" */
 
@@ -56,6 +61,7 @@ void MessageQueue<T>::send(T &&msg)
 TrafficLight::TrafficLight()
 {
     m_currentPhase = TrafficLightPhase::LIGHT_RED;
+
 }
 
 TrafficLight::~TrafficLight(){
@@ -106,19 +112,14 @@ void TrafficLight::cycleThroughPhases()
     uint32_t timeSinceLastUpdate;
     uint32_t cycleDelay = 0; 
 
-    uint32_t cycleMin = 4 * 1000; // 4 seconds 
-    uint32_t cycleMax = 6 * 1000; // 6 seconds
-
-    // Setup the random distribution
-    std::random_device rd;
-    std::mt19937 eng(rd());
-
-    std::uniform_int_distribution<uint32_t> randDist(cycleMin, cycleMax);
 
     // init stop watch
     lastUpdate = std::chrono::system_clock::now();
 
     std::string msg;
+
+    // initialize cycleDelay
+    cycleDelay = randDist(eng);
 
     while(true){
 

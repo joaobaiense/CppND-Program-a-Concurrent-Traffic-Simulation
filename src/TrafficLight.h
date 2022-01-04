@@ -5,6 +5,7 @@
 #include <deque>
 #include <condition_variable>
 #include "TrafficObject.h"
+#include <random>
 
 // forward declarations to avoid include cycle
 class Vehicle;
@@ -42,6 +43,7 @@ enum TrafficLightPhase {
     LIGHT_GREEN
 };
 
+
 class TrafficLight : TrafficObject
 {
 public:
@@ -70,6 +72,19 @@ private:
     std::mutex m_mutex;
 
     TrafficLightPhase m_currentPhase = TrafficLightPhase::LIGHT_UNKNOWN; 
+
+    // Setup the random distribution
+    static std::mt19937 eng; //(rd());
+
+    const static uint32_t cycleMin = 4000; // 4 seconds 
+    const static uint32_t cycleMax = 6000; // 6 seconds
+
+    static std::uniform_int_distribution<uint32_t> randDist; //(cycleMin, cycleMax);
+
 };
+
+
+
+
 
 #endif
