@@ -6,6 +6,7 @@
 #include "Street.h"
 #include "Intersection.h"
 #include "Graphics.h"
+#include "TrafficLight.h"
 
 
 // Paris
@@ -115,6 +116,7 @@ void createTrafficObjects_NYC(std::vector<std::shared_ptr<Street>> &streets, std
 /* Main function */
 int main()
 {
+
     /* PART 1 : Set up traffic objects */
 
     // create and connect intersections and streets
